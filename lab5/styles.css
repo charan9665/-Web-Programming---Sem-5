@@ -1,0 +1,194 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: #183149;
+  font-family: Arial, sans-serif;
+  background-color: #b9d9e7;
+  background-image:
+    linear-gradient(180deg, rgb(16 39 61 / 35%), rgb(16 39 61 / 12%) 55%, rgb(16 39 61 / 50%)),
+    url("campus-background.svg");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.college-header {
+  padding: clamp(2.5rem, 8vw, 6rem) 1.5rem 2rem;
+  color: white;
+  text-align: center;
+  text-shadow: 0 2px 12px rgb(0 0 0 / 35%);
+}
+
+.eyebrow {
+  margin: 0 0 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.college-header h1 {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  line-height: 1.08;
+}
+
+.college-header address {
+  margin-top: 1rem;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-style: normal;
+}
+
+main {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  padding: 1rem 1.25rem 3rem;
+}
+
+.courses {
+  width: min(100%, 760px);
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border: 1px solid rgb(255 255 255 / 55%);
+  border-radius: 18px;
+  background: rgb(255 255 255 / 92%);
+  box-shadow: 0 18px 50px rgb(13 36 56 / 24%);
+  text-align: center;
+}
+
+.courses .eyebrow {
+  color: #567184;
+}
+
+.courses h2 {
+  margin: 0 0 1.5rem;
+  color: #183149;
+  font-family: Georgia, serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.course-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.course {
+  padding: 1rem;
+  border-radius: 10px;
+  background: #f5f8fb;
+  font-size: 1.1rem;
+}
+
+.course--computer-science {
+  color: #174ea6;
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+
+.course--information-technology {
+  color: #087447;
+  font-family: "Trebuchet MS", sans-serif;
+  font-weight: 700;
+}
+
+.course--electronics {
+  color: #9a3d08;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+}
+
+.course--mechanical {
+  color: #873b8f;
+  font-family: "Palatino Linotype", serif;
+  font-style: oblique;
+}
+
+.course--civil {
+  color: #b22d45;
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.announcements {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  overflow: hidden;
+  color: white;
+  background: #163b55;
+}
+
+.announcement-label {
+  z-index: 1;
+  align-self: stretch;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0 1.1rem;
+  background: #e3a52f;
+  color: #172b3d;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ticker {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-track {
+  display: inline-block;
+  min-width: 100%;
+  padding-left: 100%;
+  animation: ticker-scroll 22s linear infinite;
+}
+
+.ticker-track span {
+  display: inline-block;
+  padding-right: 2rem;
+}
+
+.announcements:hover .ticker-track,
+.announcements:focus-within .ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    padding-left: 1rem;
+    animation: none;
+  }
+
+  .ticker-track span {
+    white-space: normal;
+  }
+}

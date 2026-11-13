@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 8 - Submitted Details</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="display.js" defer></script>
+</head>
+<body>
+  <main class="page-shell">
+    <header class="page-header">
+      <p class="lab-label">WEB PROGRAMMING · LAB 8</p>
+      <h1>Submitted Details</h1>
+      <p>Your registration information is shown below.</p>
+    </header>
+
+    <section class="card" aria-labelledby="details-heading">
+      <h2 id="details-heading">Registration summary</h2>
+      <p class="empty-message" id="empty-message" hidden>
+        No data available. Please fill the form first.
+      </p>
+      <dl class="details-list" id="details-list" hidden></dl>
+      <p class="form-message" id="display-message" role="alert"></p>
+
+      <div class="button-row">
+        <button class="button button-primary" id="back-button" type="button">Back</button>
+        <button class="button button-secondary" id="clear-button" type="button">Clear Data</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

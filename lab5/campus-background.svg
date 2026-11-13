@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1">
+      <stop stop-color="#72b9d3"/>
+      <stop offset="1" stop-color="#d7e9d4"/>
+    </linearGradient>
+    <linearGradient id="building" x2="0" y2="1">
+      <stop stop-color="#f4e5c8"/>
+      <stop offset="1" stop-color="#c8a980"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h1600v1000H0z"/>
+  <circle cx="1290" cy="155" r="72" fill="#fff2c2" opacity=".85"/>
+  <path fill="#91b991" d="M0 500c180-120 325-55 500 0s350-90 540-10 360-80 560-5v515H0z"/>
+  <path fill="#769c79" d="M0 610c260-100 410-5 650 15s530-120 950-5v380H0z"/>
+  <path fill="#d6c4a4" d="M270 390 800 205l530 185v390H270z"/>
+  <path fill="url(#building)" stroke="#967957" stroke-width="12" d="M355 420h890v360H355z"/>
+  <path fill="#a47f55" d="m240 425 560-255 560 255z"/>
+  <path fill="#f2e6d2" d="M735 230h130v-85h-130z"/>
+  <path fill="#a47f55" d="m710 145 90-90 90 90z"/>
+  <path fill="#385d70" d="M420 485h115v120H420zm190 0h115v120H610zm255 0h115v120H865zm190 0h115v120h-115z"/>
+  <path fill="#385d70" d="M420 650h115v130H420zm670 0h115v130h-115z"/>
+  <path fill="#72573c" d="M710 605h180v175H710z"/>
+  <path fill="#fff0d5" d="M770 675h60v105h-60z"/>
+  <path fill="#79958a" d="M0 805c135-120 255-90 390 0s260 70 395-5 270-85 405 0 270 80 410-20v220H0z"/>
+  <g fill="#567b63">
+    <circle cx="205" cy="630" r="93"/>
+    <circle cx="1450" cy="600" r="115"/>
+  </g>
+  <g fill="#7f9e74">
+    <circle cx="205" cy="585" r="75"/>
+    <circle cx="1450" cy="548" r="92"/>
+  </g>
+</svg>

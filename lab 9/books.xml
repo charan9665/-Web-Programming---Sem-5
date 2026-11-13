@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bookstore>
+  <book id="BK101" category="Computer Science">
+    <title>Learning Machine Learning</title>
+    <author>John Doe</author>
+    <price>49.99</price>
+  </book>
+  <book id="BK102" category="Web Development">
+    <title>Mastering XML &amp; Web Services</title>
+    <author>Jane Smith</author>
+    <price>39.95</price>
+  </book>
+  <book id="BK103" category="Programming">
+    <title>Clean Code in JavaScript</title>
+    <author>Robert Martin</author>
+    <price>55.50</price>
+  </book>
+  <book id="BK104" category="Database Systems">
+    <title>Practical SQL for Beginners</title>
+    <author>Priya Sharma</author>
+    <price>42.75</price>
+  </book>
+  <book id="BK105" category="Computer Science">
+    <title>Data Structures and Algorithms</title>
+    <author>Mark Allen</author>
+    <price>64.00</price>
+  </book>
+  <book id="BK106" category="Web Development">
+    <title>Responsive Web Design</title>
+    <author>Emily Carter</author>
+    <price>37.25</price>
+  </book>
+  <book id="BK107" category="Networking">
+    <title>Computer Networks: A Practical Guide</title>
+    <author>Arjun Mehta</author>
+    <price>48.90</price>
+  </book>
+</bookstore>

@@ -1,0 +1,254 @@
+/* Shared colors and typography for both Lab 8 pages. */
+:root {
+  color-scheme: light;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #1e293b;
+  background: #f1f5f9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 32px 18px;
+  background:
+    radial-gradient(circle at top left, rgba(191, 219, 254, 0.6), transparent 34rem),
+    #f1f5f9;
+}
+
+.page-shell {
+  width: min(100%, 760px);
+  margin: 0 auto;
+}
+
+.page-header {
+  margin: 12px 0 24px;
+  text-align: center;
+}
+
+.page-header h1 {
+  margin: 6px 0 8px;
+  color: #0f172a;
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+}
+
+.page-header > p:last-child {
+  margin: 0;
+  color: #64748b;
+}
+
+.lab-label {
+  margin: 0;
+  color: #4f46e5;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.card {
+  padding: clamp(20px, 5vw, 36px);
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+.card h2 {
+  margin: 0 0 22px;
+  color: #1e293b;
+  font-size: 1.25rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 20px;
+}
+
+.form-group {
+  min-width: 0;
+  margin: 0;
+}
+
+label,
+legend {
+  display: block;
+  margin-bottom: 7px;
+  color: #334155;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+input:not([type="radio"]),
+select {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  outline: none;
+  background: #ffffff;
+  color: #1e293b;
+  font: inherit;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+input:not([type="radio"])::placeholder {
+  color: #94a3b8;
+}
+
+input:not([type="radio"]):focus,
+select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.16);
+}
+
+.gender-group {
+  padding: 0;
+  border: 0;
+}
+
+.gender-group legend {
+  padding: 0;
+}
+
+.radio-options {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  gap: 16px;
+}
+
+.radio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.radio-label input {
+  accent-color: #4f46e5;
+}
+
+.field-error {
+  min-height: 1.2em;
+  margin: 5px 0 0;
+  color: #c62828;
+  font-size: 0.82rem;
+}
+
+.form-message {
+  min-height: 1.2em;
+  margin: 14px 0 0;
+  color: #c62828;
+  font-size: 0.9rem;
+}
+
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.button {
+  min-height: 46px;
+  padding: 11px 20px;
+  border: 0;
+  border-radius: 9px;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button:focus-visible {
+  outline: 3px solid #a5b4fc;
+  outline-offset: 3px;
+}
+
+.button-primary {
+  background: #4f46e5;
+}
+
+.button-primary:hover {
+  background: #4338ca;
+}
+
+.button-secondary {
+  background: #64748b;
+}
+
+.button-secondary:hover {
+  background: #475569;
+}
+
+.details-list {
+  margin: 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.7fr) 1.3fr;
+  gap: 16px;
+  padding: 14px 4px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.detail-row dt {
+  color: #64748b;
+  font-weight: 700;
+}
+
+.detail-row dd {
+  min-width: 0;
+  margin: 0;
+  color: #0f172a;
+  overflow-wrap: anywhere;
+}
+
+.empty-message {
+  margin: 0;
+  padding: 16px;
+  border-radius: 9px;
+  background: #f8fafc;
+  color: #475569;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 560px) {
+  body {
+    padding: 18px 12px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .button-row {
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .detail-row {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+}

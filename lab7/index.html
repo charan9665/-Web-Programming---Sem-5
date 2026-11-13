@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 7 - Calculator</title>
+  <style>
+    /* Page colors, sizing, and centered calculator layout. */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px;
+      display: grid;
+      place-items: center;
+      background: #10131a;
+      color: #f8fafc;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .calculator {
+      width: min(100%, 360px);
+      padding: 24px;
+      border: 1px solid #343a46;
+      border-radius: 22px;
+      background: #202530;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.4rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      margin: 0 0 20px;
+      color: #aab2c0;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    /* Read-only display shows the expression and the calculated result. */
+    .display {
+      width: 100%;
+      height: 82px;
+      margin-bottom: 18px;
+      padding: 12px 16px;
+      border: 1px solid #3c4350;
+      border-radius: 12px;
+      outline: none;
+      background: #11151c;
+      color: #f8fafc;
+      font: inherit;
+      font-size: clamp(1.7rem, 8vw, 2.4rem);
+      text-align: right;
+    }
+
+    .display::placeholder {
+      color: #778191;
+      opacity: 1;
+    }
+
+    /* Four equal columns keep the keypad aligned at different widths. */
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .key {
+      min-height: 58px;
+      border: 0;
+      border-radius: 12px;
+      background: #4a5260;
+      color: #ffffff;
+      font: inherit;
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: filter 120ms ease, transform 120ms ease;
+      touch-action: manipulation;
+    }
+
+    .key:hover {
+      filter: brightness(1.15);
+    }
+
+    .key:active {
+      transform: scale(0.95);
+      filter: brightness(0.9);
+    }
+
+    .key:focus-visible {
+      outline: 3px solid #cbd5e1;
+      outline-offset: 2px;
+    }
+
+    .key.operator {
+      background: #e8872b;
+    }
+
+    .key.special {
+      background: #bd4149;
+    }
+
+    .key.equals {
+      background: #23945b;
+    }
+
+    .key.zero {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 380px) {
+      body {
+        padding: 12px;
+      }
+
+      .calculator {
+        padding: 18px;
+      }
+
+      .keypad {
+        gap: 8px;
+      }
+
+      .key {
+        min-height: 54px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="calculator" aria-label="Calculator">
+    <h1>Calculator</h1>
+    <p class="subtitle">Lab 7 · Basic arithmetic</p>
+
+    <!-- The read-only display is updated by keypad and keyboard input. -->
+    <input
+      class="display"
+      id="display"
+      type="text"
+      placeholder="0"
+      aria-label="Calculator display"
+      aria-live="polite"
+      readonly
+    >
+
+    <!-- Each button either adds a value or runs a calculator action. -->
+    <section class="keypad" aria-label="Calculator keypad">
+      <button class="key special" type="button" data-action="clear">C</button>
+      <button class="key special" type="button" data-action="delete" aria-label="Backspace">⌫</button>
+      <button class="key special" type="button" data-value="%">%</button>
+      <button class="key operator" type="button" data-value="÷" aria-label="Divide">÷</button>
+
+      <button class="key" type="button" data-value="7">7</button>
+      <button class="key" type="button" data-value="8">8</button>
+      <button class="key" type="button" data-value="9">9</button>
+      <button class="key operator" type="button" data-value="×" aria-label="Multiply">×</button>
+
+      <button class="key" type="button" data-value="4">4</button>
+      <button class="key" type="button" data-value="5">5</button>
+      <button class="key" type="button" data-value="6">6</button>
+      <button class="key operator" type="button" data-value="-" aria-label="Subtract">−</button>
+
+      <button class="key" type="button" data-value="1">1</button>
+      <button class="key" type="button" data-value="2">2</button>
+      <button class="key" type="button" data-value="3">3</button>
+      <button class="key operator" type="button" data-value="+" aria-label="Add">+</button>
+
+      <button class="key zero" type="button" data-value="0">0</button>
+      <button class="key" type="button" data-value=".">.</button>
+      <button class="key equals" type="button" data-action="calculate">=</button>
+    </section>
+  </main>
+
+  <script>
+    // Keep references to the display and keypad for the event handlers.
+    const display = document.getElementById("display");
+    const keypad = document.querySelector(".keypad");
+    let hasError = false;
+    let justCalculated = false;
+
+    // Format results to at most eight decimal places and remove extra zeroes.
+    function formatNumber(number) {
+      return String(Number(number.toFixed(8)));
+    }
+
+    // Add a digit, decimal point, operator, or percent to the expression.
+    function appendValue(value) {
+      if (hasError) {
+        clearDisplay();
+      }
+
+      const operators = ["+", "-", "×", "÷"];
+      let expression = display.value;
+
+      // Start a new number after a result, but continue if an operator is pressed.
+      if (justCalculated) {
+        if (operators.includes(value)) {
+          justCalculated = false;
+        } else {
+          display.value = "";
+          expression = "";
+          justCalculated = false;
+        }
+      }
+
+      if (/^[0-9]$/.test(value)) {
+        if (expression.endsWith("%")) {
+          return;
+        }
+        display.value += value;
+        return;
+      }
+
+      if (value === ".") {
+        if (expression.endsWith("%")) {
+          return;
+        }
+
+        const currentNumber = expression.split(/[+\-×÷]/).pop();
+        if (currentNumber.includes(".")) {
+          return;
+        }
+
+        // Begin a decimal number as 0. or -0. rather than a bare decimal point.
+        if (expression === "" || operators.includes(expression.slice(-1))) {
+          display.value += "0.";
+        } else {
+          display.value += ".";
+        }
+        return;
+      }
+
+      if (value === "%") {
+        const currentNumber = expression.split(/[+\-×÷]/).pop();
+        if (!/\d$/.test(currentNumber)) {
+          return;
+        }
+
+        // Percent applies to the number currently being entered (for example 50% = 0.5).
+        const percentValue = Number(currentNumber) / 100;
+        display.value = expression.slice(0, -currentNumber.length) + formatNumber(percentValue);
+        return;
+      }
+
+      if (operators.includes(value)) {
+        if (expression === "") {
+          // A leading minus is allowed for negative numbers; other operators are not.
+          if (value === "-") {
+            display.value = "-";
+          }
+          return;
+        }
+
+        // Ignore an operator if the expression already ends with an operator.
+        if (operators.includes(expression.slice(-1))) {
+          return;
+        }
+
+        display.value += value;
+      }
+    }
+
+    // Clear the expression and return the calculator to its initial state.
+    function clearDisplay() {
+      display.value = "";
+      hasError = false;
+      justCalculated = false;
+    }
+
+    // Remove the last character, or clear an error message.
+    function deleteLast() {
+      if (hasError) {
+        clearDisplay();
+        return;
+      }
+
+      display.value = display.value.slice(0, -1);
+      justCalculated = false;
+    }
+
+    // Parse and calculate an expression without using eval().
+    function parseExpression(expression) {
+      const source = expression.replace(/−/g, "-");
+      const numbers = [];
+      const operators = [];
+      let position = 0;
+      let expectingNumber = true;
+
+      // Read the expression one number or operator at a time.
+      while (position < source.length) {
+        let sign = 1;
+
+        // A minus sign is allowed at the start of an expression for negative values.
+        if (expectingNumber && source[position] === "-" && numbers.length === 0) {
+          sign = -1;
+          position += 1;
+        }
+
+        const numberMatch = source.slice(position).match(/^(?:\d+\.?\d*|\.\d+)/);
+        if (expectingNumber) {
+          if (!numberMatch) {
+            throw new Error("Error");
+          }
+
+          const number = Number(numberMatch[0]) * sign;
+          if (!Number.isFinite(number)) {
+            throw new Error("Error");
+          }
+
+          numbers.push(number);
+          position += numberMatch[0].length;
+          expectingNumber = false;
+        } else {
+          const operator = source[position];
+          if (!["+", "-", "×", "÷"].includes(operator)) {
+            throw new Error("Error");
+          }
+
+          operators.push(operator);
+          position += 1;
+          expectingNumber = true;
+        }
+      }
+
+      // Expressions cannot end with an operator or contain no numbers.
+      if (expectingNumber || numbers.length === 0 || numbers.length !== operators.length + 1) {
+        throw new Error("Error");
+      }
+
+      // Calculate multiplication and division first, from left to right.
+      for (let index = 0; index < operators.length;) {
+        const operator = operators[index];
+        if (operator === "×" || operator === "÷") {
+          const left = numbers[index];
+          const right = numbers[index + 1];
+
+          if (operator === "÷" && right === 0) {
+            throw new Error("Cannot divide by zero");
+          }
+
+          const partialResult = operator === "×" ? left * right : left / right;
+          if (!Number.isFinite(partialResult)) {
+            throw new Error("Error");
+          }
+
+          numbers.splice(index, 2, partialResult);
+          operators.splice(index, 1);
+        } else {
+          index += 1;
+        }
+      }
+
+      // Add and subtract the remaining values from left to right.
+      let result = numbers[0];
+      for (let index = 0; index < operators.length; index += 1) {
+        result = operators[index] === "+"
+          ? result + numbers[index + 1]
+          : result - numbers[index + 1];
+      }
+
+      if (!Number.isFinite(result)) {
+        throw new Error("Error");
+      }
+      return result;
+    }
+
+    // Evaluate the expression and show either the rounded result or an error.
+    function calculateResult() {
+      try {
+        const result = parseExpression(display.value);
+        display.value = formatNumber(result);
+        hasError = false;
+        justCalculated = true;
+      } catch (error) {
+        display.value = error.message === "Cannot divide by zero"
+          ? "Cannot divide by zero"
+          : "Error";
+        hasError = true;
+        justCalculated = false;
+      }
+    }
+
+    // Handle clicks on all keypad buttons using their data attributes.
+    keypad.addEventListener("click", function (event) {
+      const button = event.target.closest("button");
+      if (!button) {
+        return;
+      }
+
+      if (button.dataset.action === "clear") {
+        clearDisplay();
+      } else if (button.dataset.action === "delete") {
+        deleteLast();
+      } else if (button.dataset.action === "calculate") {
+        calculateResult();
+      } else {
+        appendValue(button.dataset.value);
+      }
+    });
+
+    // Support calculator input from the keyboard as well as button clicks.
+    document.addEventListener("keydown", function (event) {
+      if (event.ctrlKey || event.metaKey || event.altKey) {
+        return;
+      }
+
+      if (/^[0-9.]$/.test(event.key)) {
+        appendValue(event.key);
+      } else if (["+", "-"].includes(event.key)) {
+        appendValue(event.key);
+      } else if (event.key === "*") {
+        appendValue("×");
+      } else if (event.key === "/") {
+        appendValue("÷");
+      } else if (event.key === "Enter" || event.key === "=") {
+        event.preventDefault();
+        calculateResult();
+      } else if (event.key === "Backspace") {
+        event.preventDefault();
+        deleteLast();
+      } else if (event.key === "Escape") {
+        clearDisplay();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="College information, courses, and announcements.">
+  <title>About Your College</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="college-header">
+      <p class="eyebrow">Welcome to</p>
+      <h1>Your College Name</h1>
+      <address>Your College Address, City, State, PIN Code</address>
+    </header>
+
+    <main>
+      <section class="courses" aria-labelledby="courses-heading">
+        <p class="eyebrow">Learn, grow, and make a difference</p>
+        <h2 id="courses-heading">Courses Offered</h2>
+        <ul class="course-list">
+          <li class="course course--computer-science">Computer Science</li>
+          <li class="course course--information-technology">Information Technology</li>
+          <li class="course course--electronics">Electronics &amp; Communication</li>
+          <li class="course course--mechanical">Mechanical Engineering</li>
+          <li class="course course--civil">Civil Engineering</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="announcements" aria-label="College announcements">
+      <span class="announcement-label">Announcements</span>
+      <div class="ticker" aria-live="polite">
+        <div class="ticker-track" id="ticker-track">
+          <span id="ticker-message">Upcoming: Check with the examination cell for semester exam dates. Annual college events — dates to be announced.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
